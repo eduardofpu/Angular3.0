@@ -17,10 +17,12 @@ public final class ServicePath {
 
 	public static final String PACKAGEE_PATH = PRIVATE_ROOT_PATH + "/packagee";
 	public static final String PERMISSION_PATH = PRIVATE_ROOT_PATH + "/permission";
+	public static final String PERVISIT_PATH = PUBLIC_ROOT_PATH + "/permisvisit";
 	
 	
 	public static final String EDITUSER_PATH = PRIVATE_ROOT_PATH + "/edituser";
 	public static final String USUARIOS_PATH = PRIVATE_ROOT_PATH + "/usuarios";
+	public static final String VISITANTES_PATH = PUBLIC_ROOT_PATH + "/visitantes";
 	
 	
 	public static final String JASPER_PATH = PRIVATE_ROOT_PATH + "/jasper";	

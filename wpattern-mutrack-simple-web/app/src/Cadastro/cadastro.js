@@ -2,10 +2,17 @@
 
 angular.module('mutrack')
   .controller('cadastroCtrl', function($scope, ngNotify, RestSrv, SERVICE_PATH) {
+
+
+
+
+
     $scope.user = {};
     $scope.users = [];
-    $scope.permissions = [];
+
+    $scope.permissao = {};
     $scope.showAddEditUser = false;
+
 
     ngNotify.config({
       theme: 'pastel'
@@ -25,19 +32,9 @@ angular.module('mutrack')
     };
 
     // Manage CRUD operations.
-    var userUrl = SERVICE_PATH.PRIVATE_PATH + '/usuarios';
+    var userUrl =  SERVICE_PATH.PUBLIC_PATH + '/visitantes';
 
-    $scope.editUser = function(user) {
-      $scope.user = angular.copy(user);
-      $scope.show();
-    };
 
-    $scope.deleteUser = function(user) {
-      RestSrv.delete(userUrl, user, function() {
-        $scope.users.splice($scope.users.indexOf(user), 1);
-        ngNotify.set('User \'' + user.name + '\' deleted.', 'success');
-      });
-    };
 
 
     $scope.updateLinkImageEdit = function(file){
@@ -57,7 +54,14 @@ angular.module('mutrack')
 
 
     $scope.saveUser = function(user) {
-      if (user.id) {
+
+
+
+
+
+      if (user.id ) {
+
+
         RestSrv.edit(userUrl, user, function() {
           delete user.password;
 
@@ -68,12 +72,32 @@ angular.module('mutrack')
 
 
             }
+
+                 //  $scope.user = {};
+                     //    if($scope.permission === ''){
+                     //       $scope.user = {'permissions': [{'role': 'ROLE_USER'}]};
+                     //    }else{
+                       //    $scope.user = {'permissions': [$scope.permission]};
+                     //    }
+
+
+
+
+
+
           }
+
+
 
           $scope.hide();// para esconder o forme
           ngNotify.set('User \'' + user.name + '\' updated.', 'success');
         });
+
+
       } else {
+
+
+
         RestSrv.add(userUrl, user, function(newUser) {
           $scope.users.push(newUser);
           $scope.hide();
@@ -82,42 +106,30 @@ angular.module('mutrack')
       }
     };
 
+
+
     RestSrv.find(userUrl,function(data) {
       $scope.users = data;
-      $scope.userEdit =  $scope.users[0];
       ngNotify.set('Loaded users with success.', 'success');
     });
 
 
+    // Request all data (permission and user).
 
 
 
-                  // Request all data (permission and user).
-                  var permissionUrl = SERVICE_PATH.PRIVATE_PATH + '/permission';
+   var permissionUrl =  SERVICE_PATH.PUBLIC_PATH   + '/permisvisit/findRole/ROLE_USER';
+
+     RestSrv.findCadastro(permissionUrl, function(data) {
 
 
-                  RestSrv.findCadastro(permissionUrl, function(data) {
-                    $scope.permissions = data;
-                      $scope.permissionEdit =  $scope.permissions[1]; // Busca apens o ROLE_USER
-
-                  });
+         $scope.permissions = data;
 
 
+  });
 
 
 
-/*
-    RestSrv.find(permissionUrl, function(data) {
-      $scope.permissions = data;
-
-      RestSrv.find(userUrl,function(data) {
-        $scope.users = data;
-        ngNotify.set('Loaded users with success.', 'success');
-      });
-    });
-
-
-*/
 
 
 
